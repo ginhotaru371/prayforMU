@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | PrayforMU</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: #1a1a1a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+      }
+      #unity-canvas {
+        width: 1080px;
+        height: 675px;
+        background: #1a1a1a;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="unity-canvas" width=1080 height=675 tabindex="-1"></canvas>
+    <script src="Build/PrayForMU.loader.js"></script>
+    <script>
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.position = "fixed";
+        canvas.style.top = "0";
+        canvas.style.left = "0";
+      } else {
+        // Ensure desktop styles are applied correctly
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = "1080px";
+        canvas.style.height = "675px";
+      }
+
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/PrayForMU.data",
+        frameworkUrl: "Build/PrayForMU.framework.js",
+        codeUrl: "Build/PrayForMU.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Gin",
+        productName: "PrayforMU",
+        productVersion: "1.0",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      });
+    </script>
+  </body>
+</html>
